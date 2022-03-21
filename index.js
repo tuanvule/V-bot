@@ -1,7 +1,7 @@
 const { Client, Intents } = require('discord.js')
 const client = new Client( { intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]} )
 
-client.login('OTU1MDUyNDMzNjk0OTQ5NDM3.YjcD5A.xORnnt3Jeoyn62bePj0rWPb23Dw')
+client.login(process.env.token)
 client.on('ready', () => {
     console.log(client.user.tag + ' đã online')
 })
