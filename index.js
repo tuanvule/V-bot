@@ -17,6 +17,6 @@ client.on('ready', () => {
 client.on('message', message => {
 
     if(message.content === 'ping') {
-        message.channel.send({content: 'thy dthw'})
+        message.channel.send({content: 'ping cái đb'})
     }    
 })
