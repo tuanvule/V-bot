@@ -12,7 +12,7 @@ let s3 = new aws.S3({
 client.login(process.env.token)
 client.on('ready', () => {
     console.log(client.user.tag + ' đã online' )
-})
+}).listen(process.env.PORT || 5000)
 
 client.on('message', message => {
 
