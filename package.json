@@ -3,13 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    
-  },
+  "scripts": {},
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.1096.0",
     "discord.js": "^13.6.0"
   }
 }
