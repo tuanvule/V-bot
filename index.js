@@ -17,6 +17,6 @@ client.on('ready', () => {
 client.on('message', message => {
 
     if(message.content === 'ping') {
-        message.channel.send({content: 'ping cài đb'})
+        message.channel.send({content: 'cuối cùng bố mày cũng online 24/7:)'})
     }    
 })
