@@ -5,7 +5,7 @@ const client = new Client( { intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD
 
 // const token = 'OTU1MDUyNDMzNjk0OTQ5NDM3.YjcD5A.bfBXJUQgybnMCUSrWUmWpee7b7g'
 
-const exampleEmbed = new MessageEmbed()
+const embed = new MessageEmbed()
 	.setColor('#0099ff')
 	.setTitle('cập nhât mới')
 	.addFields(
@@ -23,7 +23,7 @@ client.on('message', message => {
     if(message.content.includes('*')) {
         
         if(fixMessage(message.content).replace('*','') === 'xem cập nhập') {
-            channel.send({ embeds: [exampleEmbed] });
+            message.channel.send(embed);
         }
     
         if(fixMessage(message.content).replace('*','') === 'ping') {
