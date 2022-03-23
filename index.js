@@ -23,7 +23,7 @@ client.on('messageCreate', message => {
     if(message.content.includes('*')) {
         
         if(fixMessage(message.content).replace('*','') === 'xem cập nhập') {
-            message.channel.send(embed);
+            channel.send({embeds: [embed]})
         }
     
         if(fixMessage(message.content).replace('*','') === 'ping') {
