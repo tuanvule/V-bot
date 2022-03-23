@@ -1,17 +1,12 @@
 const { Client, Intents, MessageEmbed  } = require('discord.js')
 const { fixMessage } = require('./uti')
+const { updateMessage } = require('./embeds')
 
 const client = new Client( { intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]} )
 
 // const token = 'OTU1MDUyNDMzNjk0OTQ5NDM3.YjcD5A.bfBXJUQgybnMCUSrWUmWpee7b7g'
 
-const embed = new MessageEmbed()
-	.setColor('#0099ff')
-	.setTitle('cập nhât mới')
-	.addFields(
-		{ name: '1', value: 'thêm ký tự lệnh' },
-		{ name: '2', value: 'thêm lọc chữ' },
-	)
+
 
 client.login(process.env.token)
 client.on('ready', () => {
@@ -23,7 +18,7 @@ client.on('messageCreate', message => {
     if(message.content.includes('*')) {
         
         if(fixMessage(message.content).replace('*','') === 'xem cập nhập') {
-            message.channel.send({embeds: [embed]})
+            message.channel.send({embeds: [updateMessage()]})
         }
     
         if(fixMessage(message.content).replace('*','') === 'ping') {
