@@ -18,7 +18,7 @@ client.on('ready', () => {
     console.log(client.user.tag + ' đã online' )
 })
 
-client.on('message', message => {
+client.on('messageCreate', message => {
 
     if(message.content.includes('*')) {
         
