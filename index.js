@@ -29,7 +29,8 @@ client.on('ready', () => {
 })
 
 client.on('interactionCreate', interaction => {
-	channel.send({ embeds: [exampleEmbed] });
+	interaction.channel.send({ embeds: [exampleEmbed] });
+    
 });
 
 client.on('message', message => {
@@ -37,4 +38,5 @@ client.on('message', message => {
     if(message.content === 'ping') {
         message.channel.send({content: 'ping cái đb'})
     }    
+
 })
