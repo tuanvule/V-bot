@@ -1,4 +1,6 @@
 const { Client, Intents } = require('discord.js')
+const { fixMessage } = require('./uti')
+
 const client = new Client( { intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]} )
 
 // const token = 'OTU1MDUyNDMzNjk0OTQ5NDM3.YjcD5A.bfBXJUQgybnMCUSrWUmWpee7b7g'
@@ -33,13 +35,22 @@ client.on('interactionCreate', interaction => {
 	interaction.channel.send({ embeds: [exampleEmbed] });
     
     console.log(interaction)
-    
+
 });
 
 client.on('message', message => {
 
-    if(message.content === 'ping') {
-        message.channel.send({content: 'ping cái đb'})
-    }    
+    if(message.includes('@')) {
+        
+        if(fixMessage(message.content).replace('@','') === 'xem cập nhập') {
+            message.channel.send({ embeds: [exampleEmbed] })
+        }
+    
+        if(fixMessage(message.content).replace('@','') === 'ping') {
+            message.channel.send({content: 'ping cái đb'})
+        }    
+
+    }
+
 
 })
