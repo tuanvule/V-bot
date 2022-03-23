@@ -40,17 +40,17 @@ client.on('interactionCreate', interaction => {
 
 client.on('message', message => {
 
-    if(message.includes('*')) {
+    // if(message.includes('*')) {
         
-        if(fixMessage(message.content).replace('*','') === 'xem cập nhập') {
+        if(fixMessage(message.content) === 'xem cập nhập') {
             message.channel.send({ embeds: [exampleEmbed] })
         }
     
-        if(fixMessage(message.content).replace('*','') === 'ping') {
+        if(fixMessage(message.content) === 'ping') {
             message.channel.send({content: 'ping cái đb'})
         }    
 
-    }
+    // }
 
 
 })
