@@ -1,49 +1,29 @@
-const { Client, Intents } = require('discord.js')
+const { Client, Intents, MessageEmbed  } = require('discord.js')
 const { fixMessage } = require('./uti')
 
 const client = new Client( { intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]} )
 
 // const token = 'OTU1MDUyNDMzNjk0OTQ5NDM3.YjcD5A.bfBXJUQgybnMCUSrWUmWpee7b7g'
 
-const exampleEmbed = {
-	color: 0x0099ff,
-	title: 'cập nhập mới',
-	fields: [
-		{
-            name: '1',
-			value: 'lọc tin nhắn',
-		},
-		{
-			name: '2',
-			value: 'cập nhập ký tự dùng lệnh ( @ )',
-		},
-	],
-    image: {
-		url: 'data:image/jpeg;base64,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',
-	},
-	timestamp: new Date(),
-};
-
+const exampleEmbed = new MessageEmbed()
+	.setColor('#0099ff')
+	.setTitle('cập nhât mới')
+	.addFields(
+		{ name: '1', value: 'thêm ký tự lệnh' },
+		{ name: '2', value: 'thêm lọc chữ' },
+	)
 
 client.login(process.env.token)
 client.on('ready', () => {
     console.log(client.user.tag + ' đã online' )
 })
 
-client.on('interactionCreate', interaction => {
-
-	interaction.channel.send({ embeds: [exampleEmbed] });
-    
-    console.log(interaction)
-
-});
-
 client.on('message', message => {
 
     if(message.content.includes('*')) {
         
         if(fixMessage(message.content).replace('*','') === 'xem cập nhập') {
-            message.channel.send({ embeds: [exampleEmbed] })
+            channel.send({ embeds: [exampleEmbed] });
         }
     
         if(fixMessage(message.content).replace('*','') === 'ping') {
