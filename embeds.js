@@ -1,3 +1,5 @@
+const {  MessageEmbed  } = require('discord.js')
+
 module.exports = {
     updateMessage() {
         return embed = new MessageEmbed()
