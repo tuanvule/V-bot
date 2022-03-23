@@ -29,7 +29,10 @@ client.on('ready', () => {
 })
 
 client.on('interactionCreate', interaction => {
+
 	interaction.channel.send({ embeds: [exampleEmbed] });
+    
+    console.log(interaction)
     
 });
 
