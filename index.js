@@ -30,17 +30,17 @@ client.on('messageCreate', async message => {
 
         const serverQueue = queue.get(message.guild.id);
 
-        if (fixMessage(message.content).replace('*','') === 'play') {
+        if (fixMessage(message.content).replace('*','') === message.content.includes('play')) {
             execute(message, serverQueue);
-            return;
-          } else if (fixMessage(message.content).replace('*','') === 'skip') {
-            skip(message, serverQueue);
-            return;
-          } else if (fixMessage(message.content).replace('*','') === 'stop') {
-            stop(message, serverQueue);
-            return;
-          } else {
-            message.channel.send("You need to enter a valid command!");
+            // return;
+        //   } else if (fixMessage(message.content).replace('*','') === 'skip') {
+        //     skip(message, serverQueue);
+        //     return;
+        //   } else if (fixMessage(message.content).replace('*','') === 'stop') {
+        //     stop(message, serverQueue);
+        //     return;
+        //   } else {
+        //     message.channel.send("You need to enter a valid command!");
           }
 
     }
