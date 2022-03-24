@@ -1,6 +1,7 @@
 const { Client, Intents, MessageEmbed  } = require('discord.js')
 const { fixMessage } = require('./uti')
 const { updateMessage } = require('./embeds')
+const { execute, stop, play } = require('./play-music')
 
 const client = new Client( { intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]} )
 
@@ -13,7 +14,7 @@ client.on('ready', () => {
     console.log(client.user.tag + ' đã online' )
 })
 
-client.on('messageCreate', message => {
+client.on('messageCreate', async message => {
 
     if(message.content.includes('*')) {
 
@@ -26,6 +27,21 @@ client.on('messageCreate', message => {
         if(fixMessage(message.content).replace('*','') === 'ping') {
             message.channel.send({content: 'ping cái đb'})
         }    
+
+        const serverQueue = queue.get(message.guild.id);
+
+        if (fixMessage(message.content).replace('*','') === 'play') {
+            execute(message, serverQueue);
+            return;
+          } else if (fixMessage(message.content).replace('*','') === 'skip') {
+            skip(message, serverQueue);
+            return;
+          } else if (fixMessage(message.content).replace('*','') === 'stop') {
+            stop(message, serverQueue);
+            return;
+          } else {
+            message.channel.send("You need to enter a valid command!");
+          }
 
     }
 
