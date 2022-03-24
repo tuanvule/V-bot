@@ -32,6 +32,7 @@ client.on('messageCreate', async message => {
 
         if (fixMessage(message.content).replace('*','') === message.content.includes('play')) {
             execute(message, serverQueue);
+            console.log('not error')
             // return;
         //   } else if (fixMessage(message.content).replace('*','') === 'skip') {
         //     skip(message, serverQueue);
