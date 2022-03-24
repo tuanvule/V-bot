@@ -1,6 +1,6 @@
 const { Client, Intents, MessageEmbed  } = require('discord.js')
 const { fixMessage } = require('./uti')
-const { updateMessage } = require('./embeds')
+const { updateMessage, RBSGAME } = require('./embeds')
 const { execute, stop, play, queue } = require('./play-music')
 
 const client = new Client( { intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]} )
@@ -28,23 +28,17 @@ client.on('messageCreate', async message => {
             message.channel.send({content: 'ping cái đb'})
         }    
 
-        const serverQueue = queue.get(message.guild.id);
+        if(fixMessage(message.content).replace('*','') === 'chơi kéo búa bao') {
+            message.channel.send({embeds: [RBSGAME()]})
+        }    
+        
+        if(fixMessage(message.content).replace('*','') === 'bắt đầu') {
+            message.channel.send('hãy nhập lữa chọn của bạn vào bàn phím rồi gửi, tui sẽ random ra lữa chọn của tôi:)')
+        }
 
-        if (fixMessage(message.content).replace('*','') === message.content.includes('play')) {
-            execute(message, serverQueue);
-            console.log('not error')
-            // return;
-        //   } else if (fixMessage(message.content).replace('*','') === 'skip') {
-        //     skip(message, serverQueue);
-        //     return;
-        //   } else if (fixMessage(message.content).replace('*','') === 'stop') {
-        //     stop(message, serverQueue);
-        //     return;
-        //   } else {
-        //     message.channel.send("You need to enter a valid command!");
-          }
-
+        if(fixMessage(message.content).replace('*','') === 'kéo' || 'búa' || 'bao') {
+            message.channel.send(playRPS(message.content.replace('*','')))
+        }
     }
-
 
 })
