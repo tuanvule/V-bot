@@ -3,6 +3,9 @@ const ytdl = require("ytdl-core");
 const queue = new Map();
 
 module.exports = {
+
+    queue: queue,
+
     async execute(message, serverQueue) {
         const args = message.content.split(" ");
       

@@ -1,7 +1,7 @@
 const { Client, Intents, MessageEmbed  } = require('discord.js')
 const { fixMessage } = require('./uti')
 const { updateMessage } = require('./embeds')
-const { execute, stop, play } = require('./play-music')
+const { execute, stop, play, queue } = require('./play-music')
 
 const client = new Client( { intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]} )
 
