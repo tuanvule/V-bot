@@ -16,6 +16,8 @@ client.on('ready', () => {
 client.on('messageCreate', message => {
 
     if(message.content.includes('*')) {
+
+        console.log(message)
         
         if(fixMessage(message.content).replace('*','') === 'xem cập nhập') {
             message.channel.send({embeds: [updateMessage()]})
