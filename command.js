@@ -10,7 +10,7 @@ module.exports = {
             messages.forEach(message => {
                 const command = `*${message}`
 
-                if(content.startsWith(`${command}`) || content === message) {
+                if(content.startsWith(`${command}`) || content === command) {
                     callback(message)
                 }
             })
