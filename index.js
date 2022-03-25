@@ -9,6 +9,7 @@ const client = new Client( { intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD
 // const token = 'OTU1MDUyNDMzNjk0OTQ5NDM3.YjcD5A.bfBXJUQgybnMCUSrWUmWpee7b7g'
 
 let isPlayingRBS
+let isStart
 
 client.login(process.env.token)
 client.on('ready', () => {
@@ -38,12 +39,19 @@ client.on('messageCreate', async message => {
 
             if(fixMessage(message.content).replace('*','') === 'bắt đầu') {
                 message.channel.send('hãy nhập lữa chọn của bạn vào bàn phím rồi gửi, tui sẽ random ra lữa chọn của tôi:)')
+                isStart = true
             }
-    
-            if(fixMessage(message.content).replace('*','') === 'kéo' || 'búa' || 'bao') {
-                message.channel.send(playRPS(message.content.replace('*','')))
+
+            if(isStart) {
+
+                if(fixMessage(message.content).replace('*','') === 'kéo' || 'búa' || 'bao') {
+                    message.channel.send(playRPS(message.content.replace('*','')))
+                    isPlayingRBS = false
+                    isStart = false
+                }
+
             }
-            
+
         }
         
     }
