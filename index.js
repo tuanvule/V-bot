@@ -1,6 +1,7 @@
 const { Client, Intents, MessageEmbed  } = require('discord.js')
 const { fixMessage } = require('./uti')
 const { updateMessage, RBSGAME } = require('./embeds')
+const { playRPS } = require('./game/rock-paper-scissors')
 const { execute, stop, play, queue } = require('./play-music')
 
 const client = new Client( { intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]} )
