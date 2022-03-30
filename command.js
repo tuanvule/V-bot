@@ -1,3 +1,4 @@
+
 module.exports = {
     command(client, messages, callback) {
         if(typeof messages === 'string') {
