@@ -125,7 +125,7 @@ const obj = {
         //   queue.delete(guild.id);
         //   return;
         // }
-        console.log('serverQueue 1:',serverQueue)
+        // console.log('serverQueue 1:',serverQueue)
     
         connection.subscribe(player)
     
@@ -157,7 +157,7 @@ const obj = {
                 title: songInfo.videoDetails.title,
                 url: songInfo.videoDetails.video_url,
           };
-          console.log('serverQueue 2:',serverQueue)
+          // console.log('serverQueue 2:',serverQueue)
           serverQueue.songs.push(song);
         },
         remove(message, serverQueue) {

@@ -35,7 +35,7 @@ client.on('ready', () => {
     })
     command(client, 'songlist', message => {
         const serverQueue = queue.get(message.guild.id);
-        console.log(message.content.split(' ')[1])
+        // console.log(message.content.split(' ')[1])
         switch (message.content.split(' ')[1]) {
             case 'add':
                 playList.add(message, serverQueue)
