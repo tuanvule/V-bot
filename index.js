@@ -7,9 +7,9 @@ const { execute, stop, skip, queue, unstop, playList} = require('./music')
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
 
-client.login('OTU3OTgxODg4MzI3MzUyMzcw.YkGsKA.4QeDaKXtPmdADL9_xMF3SpAFj0g')
+// client.login('OTU3OTgxODg4MzI3MzUyMzcw.YkGsKA.4QeDaKXtPmdADL9_xMF3SpAFj0g')
 
-// client.login(process.env.token)
+client.login(process.env.token)
 
 client.on('ready', () => {
     console.log(client.user.tag + ' đã online' )
