@@ -20,6 +20,23 @@ module.exports = {
             { name: '--1--', value: 'nhắn 1 trong 3 chữ: kéo, búa, bao' },
             { name: 'lệnh bắt đầu:', value: '*bắt đầu' },
         )
+    },
+
+    playList(songs) {
+        return embed = new MessageEmbed()
+        .setColor('#ed2f21')
+        .setTitle('danh sách nhạc')
+        .addFields(
+            [...songs].map((song, index) => {
+                return {
+                    name: `${index + 1}`,
+                    value: song.title
+                }
+            })
+            // { name: 'cách chơi', value: '------------' },
+            // { name: '--1--', value: 'nhắn 1 trong 3 chữ: kéo, búa, bao' },
+            // { name: 'lệnh bắt đầu:', value: '*bắt đầu' },
+        )
     }
 
 }
