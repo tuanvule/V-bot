@@ -13,9 +13,14 @@ module.exports = {
                 { name: '*play', value: 'EX: *play https://www.youtube.com/watch?v=8ofCZObsnOo' },
                 { name: '*stop', value: 'EX: *stop' },
                 { name: 'các lệnh dành cho songlist', value: '-------------------------------------------------------------------------------' },
+                { name: '*songlist create', value: 'EX: *songlist create' },
                 { name: '*songlist add', value: 'EX: *songlist add https://www.youtube.com/watch?v=8ofCZObsnOo' },
+                { name: '*songlist start', value: 'EX: *songlist start \n lệnh này dùng để bắt đầu phát các bài hát trong songlist' },
                 { name: '*songlist next', value: 'EX: *songlist next' },
                 { name: '*songlist back', value: 'EX: *songlist back' },
+                { name: '*songlist show', value: 'EX: *songlist show' },
+                { name: '*songlist remove', value: 'EX: *songlist remove 1 \n số < 1 > là thứ tự của bài hát trong songlist' },
+
             )
     },
 

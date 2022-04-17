@@ -46,19 +46,17 @@ client.on('ready', () => {
                 playList.add(message, serverQueue)
                 break;
             case 'remove':
-
+                playList.remove(message, serverQueue, message.content.split(' ')[2] ? message.content.split(' ')[2] : 1)
                 break;
-            case 'play':
+            case 'start':
                 playList.play(message, serverQueue)
                 break;
             case 'show':
-                message.channel.send({
-                    embeds: [playList.showPlayList(message, serverQueue)]
-                })
+                playList.showPlayList(message, serverQueue)
                 break;
             case 'next':
                 i++
-                playList.skip(message, serverQueue, i);
+                playList.next(message, serverQueue, i);
                 break;
             case 'back':
                 i--

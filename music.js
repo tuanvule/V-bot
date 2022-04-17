@@ -201,14 +201,26 @@ const obj = {
           }
         },
 
-        remove(message, serverQueue) {
+        remove(message, serverQueue, index) {
           // serverQueue.songs;
+          const newindex = Number(index) - 1
+
+          console.log(newindex)
+          console.log(serverQueue.songs[newindex]);
+          serverQueue.songs.splice(newindex, 1);
+          console.log(serverQueue.songs);
         },
         showPlayList(message, serverQueue) {
-          return playList(serverQueue.songs)
+          if(serverQueue && serverQueue.songs.length > 0) {
+            message.channel.send({
+              embeds: [playList(serverQueue.songs)]
+            })
+          } else {
+            message.channel.send({ content: 'không còn bài hát nào trong songlist' })
+          }
         },
 
-        skip(message, serverQueue, i) {
+        next(message, serverQueue, i) {
           if (!message.member.voice.channel)
             return message.channel.send(
               "You have to be in a voice channel to stop the music!"
@@ -216,7 +228,6 @@ const obj = {
           if (!serverQueue)
             return message.channel.send("There is no song that I could skip!");
           if(serverQueue.songs.length > 1) {
-            // serverQueue.songs.shift();
             obj.play(message.guild, serverQueue.songs[i]);
           }
         },
