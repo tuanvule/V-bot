@@ -31,10 +31,10 @@ client.on('ready', () => {
     command(client, 'thông báo', message => {
         message.channel.send({ content: 'tôi sẽ không được cập nhập nữa' })
     })
-    // command(client, 'play', message => {
-    //     const serverQueue = queue.get(message.guild.id);
-    //     execute(message, serverQueue);
-    // })
+    command(client, 'play', message => {
+        const serverQueue = queue.get(message.guild.id);
+        execute(message, serverQueue);
+    })
     command(client, 'songlist', message => {
         const serverQueue = queue.get(message.guild.id);
         // console.log(message.content.split(' ')[1])
@@ -63,7 +63,7 @@ client.on('ready', () => {
                 playList.back(message, serverQueue, i);
                 break;
             default:
-                message.channel.send({ content: 'chỉ có thể add hoặc remove bài hát trong playlist' })
+                message.channel.send({ content: 'lệnh không hợp lệ' })
         }
     })
     command(client, 'stop', message => {
