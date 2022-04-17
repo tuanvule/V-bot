@@ -7,7 +7,15 @@ module.exports = {
             .setTitle('cập nhât mới')
             .addFields(
                 { name: '1', value: 'thêm ký tự lệnh' },
-                { name: '2', value: 'thêm lọc chữ' },
+                { name: '2', value: 'thêm lọc chữ' },            
+                { name: '\u200B', value: '\u200B' },
+                { name: 'các câu lệnh để chơi nhạc', value: '-------------------------------------------------------------------------------' },
+                { name: '*play', value: 'EX: *play https://www.youtube.com/watch?v=8ofCZObsnOo' },
+                { name: '*stop', value: 'EX: *stop' },
+                { name: 'các lệnh dành cho songlist', value: '-------------------------------------------------------------------------------' },
+                { name: '*songlist add', value: 'EX: *songlist add https://www.youtube.com/watch?v=8ofCZObsnOo' },
+                { name: '*songlist next', value: 'EX: *songlist next' },
+                { name: '*songlist back', value: 'EX: *songlist back' },
             )
     },
 
@@ -19,6 +27,7 @@ module.exports = {
             { name: 'cách chơi', value: '------------' },
             { name: '--1--', value: 'nhắn 1 trong 3 chữ: kéo, búa, bao' },
             { name: 'lệnh bắt đầu:', value: '*bắt đầu' },
+
         )
     },
 

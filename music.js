@@ -13,9 +13,11 @@ const queue = new Map();
 
 // module.exports = queue
 
+let songlist
+
 const obj = {
     queue,
-    async execute(message, serverQueue) {
+    async execute(message, serverQueue, songlist) {
         const args = message.content.split(" ");
       
         const voiceChannel = message.member.voice.channel;
@@ -30,14 +32,25 @@ const obj = {
           );
         }
       
-        if(args[1]) {
-          const songInfo = await ytdl.getInfo(args[1]);
+        if(args[1] || songlist) {
+
+          let songInfoFormURL = !songlist && await ytdl.getInfo(args[1])
+          let songInfoFormSonglist = songlist && await ytdl.getInfo(songlist[0].url)
+
+          const songInfo = songInfoFormURL || songInfoFormSonglist;
+          // console.log(songInfo, songInfoFormURL, songInfoFormSonglist)
+
+          let videoUrl = songInfo.videoDetails.video_url.includes('&') ? songInfo.videoDetails.video_url.split('&')[0] : songInfo.videoDetails.video_url
+
+          console.log(videoUrl)
+
           const song = {
                 title: songInfo.videoDetails.title,
-                url: songInfo.videoDetails.video_url,
+                url: videoUrl,
+                // url: songInfo.videoDetails.video_url,
           };
 
-          if (!serverQueue) {
+          if (!serverQueue && !songlist) {
             const queueContruct = {
               textChannel: message.channel,
               voiceChannel: voiceChannel,
@@ -63,6 +76,16 @@ const obj = {
               queue.delete(message.guild.id);
               return message.channel.send(err);
             }
+          } else if(songlist) {
+            const queueContruct = queue.get(message.guild.id)
+            var connection = await joinVoiceChannel({
+              channelId: message.member.voice.channel.id,
+              guildId: message.guild.id,
+              adapterCreator: message.guild.voiceAdapterCreator
+            });
+            queueContruct.connection = connection;
+            const songs = queue.get(message.guild.id).songs
+            obj.play(message.guild, songs[0]);
           } else {
             const songs = queue.get(message.guild.id).songs
             songs.push(song);
@@ -73,16 +96,6 @@ const obj = {
           }
         }
     
-      },
-      
-      skip(message, serverQueue) {
-        if (!message.member.voice.channel)
-          return message.channel.send(
-            "You have to be in a voice channel to stop the music!"
-          );
-        if (!serverQueue)
-          return message.channel.send("There is no song that I could skip!");
-        serverQueue.connection.dispatcher.end();
       },
       
       stop(message, serverQueue) {
@@ -125,7 +138,6 @@ const obj = {
         //   queue.delete(guild.id);
         //   return;
         // }
-        // console.log('serverQueue 1:',serverQueue)
     
         connection.subscribe(player)
     
@@ -149,22 +161,77 @@ const obj = {
       },
 
       playList: {
+        create(message, serverQueue) {
+          const voiceChannel = message.member.voice.channel;
+
+          const queueContruct = {
+            textChannel: message.channel,
+            voiceChannel: voiceChannel,
+            connection: null,
+            songs: [],
+            volume: 5,
+            playing: true
+          };
+      
+          queue.set(message.guild.id, queueContruct);
+          songlist = queue.get(message.guild.id)
+          message.channel.send({ content: 'songlist mới đã được tạo' })
+        },
+
         async add(message, serverQueue) {
           const args = message.content.split(" ");
         
-          const songInfo = await ytdl.getInfo(args[2]);
-          const song = {
-                title: songInfo.videoDetails.title,
-                url: songInfo.videoDetails.video_url,
-          };
-          // console.log('serverQueue 2:',serverQueue)
-          serverQueue.songs.push(song);
+          if(args.length > 2) {
+            const songInfo = await ytdl.getInfo(args[2]);
+            const song = {
+                  title: songInfo.videoDetails.title,
+                  url: songInfo.videoDetails.video_url,
+            };
+            serverQueue.songs.push(song);
+          }
         },
+
+        play(message, serverQueue) {
+          if(songlist) {
+            // console.log(songlist.songs[0].url)
+            // return
+            obj.execute(message, serverQueue, songlist.songs);
+          } else {
+            message.channel.send({ content: 'chưa có songlist nào được tạo' })
+          }
+        },
+
         remove(message, serverQueue) {
           // serverQueue.songs;
         },
         showPlayList(message, serverQueue) {
           return playList(serverQueue.songs)
+        },
+
+        skip(message, serverQueue, i) {
+          if (!message.member.voice.channel)
+            return message.channel.send(
+              "You have to be in a voice channel to stop the music!"
+            );
+          if (!serverQueue)
+            return message.channel.send("There is no song that I could skip!");
+          if(serverQueue.songs.length > 1) {
+            // serverQueue.songs.shift();
+            obj.play(message.guild, serverQueue.songs[i]);
+          }
+        },
+
+        back(message, serverQueue, i) {
+          if (!message.member.voice.channel)
+            return message.channel.send(
+              "You have to be in a voice channel to stop the music!"
+            );
+          if (!serverQueue)
+            return message.channel.send("There is no song that I could skip!");
+          if(serverQueue.songs.length > 1) {
+            // serverQueue.songs.shift();
+            obj.play(message.guild, serverQueue.songs[i]);
+          }
         },
 
       }

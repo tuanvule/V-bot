@@ -7,9 +7,11 @@ const { execute, stop, skip, queue, unstop, playList} = require('./music')
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
 
-// client.login('OTU3OTgxODg4MzI3MzUyMzcw.YkGsKA.4QeDaKXtPmdADL9_xMF3SpAFj0g')
+client.login('OTU3OTgxODg4MzI3MzUyMzcw.YkGsKA.4QeDaKXtPmdADL9_xMF3SpAFj0g')
 
-client.login(process.env.token)
+// client.login(process.env.token)
+
+let i = 0
 
 client.on('ready', () => {
     console.log(client.user.tag + ' đã online' )
@@ -29,32 +31,42 @@ client.on('ready', () => {
     command(client, 'thông báo', message => {
         message.channel.send({ content: 'tôi sẽ không được cập nhập nữa' })
     })
-    command(client, 'play', message => {
-        const serverQueue = queue.get(message.guild.id);
-        execute(message, serverQueue);
-    })
+    // command(client, 'play', message => {
+    //     const serverQueue = queue.get(message.guild.id);
+    //     execute(message, serverQueue);
+    // })
     command(client, 'songlist', message => {
         const serverQueue = queue.get(message.guild.id);
         // console.log(message.content.split(' ')[1])
         switch (message.content.split(' ')[1]) {
+            case 'create':
+                playList.create(message, serverQueue)
+                break;
             case 'add':
                 playList.add(message, serverQueue)
                 break;
             case 'remove':
 
                 break;
+            case 'play':
+                playList.play(message, serverQueue)
+                break;
             case 'show':
                 message.channel.send({
                     embeds: [playList.showPlayList(message, serverQueue)]
                 })
                 break;
+            case 'next':
+                i++
+                playList.skip(message, serverQueue, i);
+                break;
+            case 'back':
+                i--
+                playList.back(message, serverQueue, i);
+                break;
             default:
                 message.channel.send({ content: 'chỉ có thể add hoặc remove bài hát trong playlist' })
         }
-    })
-    command(client, 'skip', message => {
-        const serverQueue = queue.get(message.guild.id);
-        skip(message, serverQueue);
     })
     command(client, 'stop', message => {
         const serverQueue = queue.get(message.guild.id);
