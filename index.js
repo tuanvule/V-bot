@@ -31,10 +31,12 @@ client.on('ready', () => {
     command(client, 'thông báo', message => {
         message.channel.send({ content: 'tôi sẽ không được cập nhập nữa' })
     })
+
     command(client, 'play', message => {
         const serverQueue = queue.get(message.guild.id);
         execute(message, serverQueue);
     })
+
     command(client, 'songlist', message => {
         const serverQueue = queue.get(message.guild.id);
         // console.log(message.content.split(' ')[1])
@@ -49,7 +51,7 @@ client.on('ready', () => {
                 playList.remove(message, serverQueue, message.content.split(' ')[2] ? message.content.split(' ')[2] : 1)
                 break;
             case 'start':
-                playList.play(message, serverQueue)
+                playList.play(message, serverQueue, message.content.split(' ')[2] ? message.content.split(' ')[2] : 1)
                 break;
             case 'show':
                 playList.showPlayList(message, serverQueue)
@@ -66,44 +68,15 @@ client.on('ready', () => {
                 message.channel.send({ content: 'lệnh không hợp lệ' })
         }
     })
+
     command(client, 'stop', message => {
         const serverQueue = queue.get(message.guild.id);
         stop(message, serverQueue);
     })
+
     command(client, 'continue', message => {
         const serverQueue = queue.get(message.guild.id);
         unstop(message, serverQueue);
     })
 
-
-    // command(client, 'play', message => {
-    //     joinVoiceChannel({
-    //         channelId: message.member.voice.channel.id,
-    //         guildId: message.guild.id,
-    //         adapterCreator: message.guild.voiceAdapterCreator
-    //     })
-    // })
-
 })
-
-// client.on("message", async message => {
-//     if (message.author.bot) return;
-//     if (!message.content.startsWith('*')) return;
-  
-  
-//     if (message.content.startsWith(`*play`)) {
-//       execute(message, serverQueue);
-//       return;
-//     } else if (message.content.startsWith(`*skip`)) {
-//       skip(message, serverQueue);
-//       return;
-//     } else if (message.content.startsWith(`*stop`)) {
-//       stop(message, serverQueue);
-//       return;
-//     } else {
-//       message.channel.send("You need to enter a valid command!");
-//     }
-//     // console.log(message.guild.id.connection)
-
-//   });
-  

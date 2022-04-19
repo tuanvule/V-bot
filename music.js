@@ -17,7 +17,8 @@ let songlist
 
 const obj = {
     queue,
-    async execute(message, serverQueue, songlist) {
+    songIndex: 0,
+    async execute(message, serverQueue, songlist, index) {
         const args = message.content.split(" ");
       
         const voiceChannel = message.member.voice.channel;
@@ -41,8 +42,6 @@ const obj = {
           // console.log(songInfo, songInfoFormURL, songInfoFormSonglist)
 
           let videoUrl = songInfo.videoDetails.video_url.includes('&') ? songInfo.videoDetails.video_url.split('&')[0] : songInfo.videoDetails.video_url
-
-          console.log(videoUrl)
 
           const song = {
                 title: songInfo.videoDetails.title,
@@ -85,7 +84,7 @@ const obj = {
             });
             queueContruct.connection = connection;
             const songs = queue.get(message.guild.id).songs
-            obj.play(message.guild, songs[0]);
+            obj.play(message.guild, songs[index]);
           } else {
             const songs = queue.get(message.guild.id).songs
             songs.push(song);
@@ -142,11 +141,16 @@ const obj = {
         connection.subscribe(player)
     
         player.play(resource)
+
         player.on(AudioPlayerStatus.Idle, () => {
           if(serverQueue.songs.length > 1) {
-            serverQueue.songs.shift();
+            serverQueue.songs.shift()
             obj.play(guild, serverQueue.songs[0]);
           }
+        });
+
+        player.on('error', error => {
+          console.error(error);
         });
       
         // const dispatcher = serverQueue.connection
@@ -188,14 +192,16 @@ const obj = {
                   url: songInfo.videoDetails.video_url,
             };
             serverQueue.songs.push(song);
+            message.channel.send({ content: `đã add bài ${song.title} vào songlist` })
           }
         },
 
-        play(message, serverQueue) {
+        play(message, serverQueue, index) {
           if(songlist) {
             // console.log(songlist.songs[0].url)
             // return
-            obj.execute(message, serverQueue, songlist.songs);
+            const newindex = Number(index) - 1
+            obj.execute(message, serverQueue, songlist.songs, newindex);
           } else {
             message.channel.send({ content: 'chưa có songlist nào được tạo' })
           }
@@ -204,11 +210,7 @@ const obj = {
         remove(message, serverQueue, index) {
           // serverQueue.songs;
           const newindex = Number(index) - 1
-
-          console.log(newindex)
-          console.log(serverQueue.songs[newindex]);
           serverQueue.songs.splice(newindex, 1);
-          console.log(serverQueue.songs);
         },
         showPlayList(message, serverQueue) {
           if(serverQueue && serverQueue.songs.length > 0) {
