@@ -79,4 +79,12 @@ client.on('ready', () => {
         unstop(message, serverQueue);
     })
 
+    command(client, ['say', 'nói'], message => {
+        const args = message.content.split(' ')
+        
+        args.shift()
+
+        message.channel.send({ content: args.join(' ') })
+    })
+
 })
