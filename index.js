@@ -14,6 +14,9 @@ client.login('OTU3OTgxODg4MzI3MzUyMzcw.YkGsKA.4QeDaKXtPmdADL9_xMF3SpAFj0g')
 let i = 0
 
 client.on('ready', () => {
+
+    client.user.setUsername("Phusical - m2gamingv23");
+    
     console.log(client.user.tag + ' đã online' )
 
     command(client, ['ping','test'], message => {
