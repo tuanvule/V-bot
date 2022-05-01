@@ -2,6 +2,7 @@ const { Client, Intents, MessageEmbed  } = require('discord.js')
 const { command } = require('./command')
 const { updateMessage, RBSGAME } = require('./embeds')
 const { playRPS } = require('./game/rock-paper-scissors')
+const morseTranslater = require('./morse-trainslater')
 
 const { execute, stop, skip, queue, unstop, playList} = require('./music')
 
@@ -84,10 +85,16 @@ client.on('ready', () => {
 
     command(client, ['say', 'nói'], message => {
         const args = message.content.split(' ')
-        
         args.shift()
-
         message.channel.send({ content: args.join(' ') })
+        // .react(':sunglasses')
     })
 
+    command(client, 'morse->', message => {
+        morseTranslater(message, 'morse to text')
+    })
+
+    command(client, 'morse<-', message => {
+        morseTranslater(message, 'text to morse')
+    })
 })
